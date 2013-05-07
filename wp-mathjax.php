@@ -9,7 +9,7 @@ Author URI: http://www.yelinkyaw.com
 */
 
 //Initialization
-if (get_option('wp_mathjax_local') =="")
+if (get_option('wp_mathjax_config') =='')
 {
 	update_option('wp_mathjax_local', 1);
 	update_option('wp_mathjax_config', 'TeX-AMS-MML_HTMLorMML');
@@ -77,13 +77,14 @@ function admin_ui()
 		<tr>
 			<?php
 			$config_dir = plugin_dir_path(__FILE__).'MathJax/config/';
+			echo "<td>$config_dir</td>";
 			$files = scandir($config_dir);
 			
 			foreach($files as $file)
 			{
-				if(is_file($file))
+				if(is_file($config_dir.$file))
 				{
-					$path_parts = pathinfo($file);
+					$path_parts = pathinfo($config_dir.$file);
 					$config_file = $path_parts['filename'];
 					$checked = '';
 					if(get_option('wp_mathjax_config')==$config_file)
