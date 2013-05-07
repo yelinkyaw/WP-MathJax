@@ -8,13 +8,6 @@ Version: 0.1.0
 Author URI: http://www.yelinkyaw.com
 */
 
-//Initialization
-if (get_option('wp_mathjax_config') =='')
-{
-	update_option('wp_mathjax_local', 1);
-	update_option('wp_mathjax_config', 'TeX-AMS-MML_HTMLorMML');
-}
-
 // Add MathJax to Header
 add_action('wp_head', 'mathjax');
 
@@ -51,11 +44,18 @@ function admin_options()
 		update_option('wp_mathjax_local', $_POST['wp_mathjax_local']);
 		update_option('wp_mathjax_config', $_POST['wp_mathjax_config']);
 	}
+	
+	//Initialization
+	if (get_option('wp_mathjax_config') =='')
+	{
+		update_option('wp_mathjax_local', 1);
+		update_option('wp_mathjax_config', 'TeX-AMS-MML_HTMLorMML');
+	}
+	
 	//Show Admin UI
 	admin_ui();
 }
 ?>
-
 <?php
 function admin_ui()
 {
