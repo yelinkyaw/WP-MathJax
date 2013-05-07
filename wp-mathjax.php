@@ -49,6 +49,7 @@ function admin_options()
 	if(isset($_POST['Submit']))
 	{
 		update_option('wp_mathjax_local', $_POST['wp_mathjax_local']);
+		update_option('wp_mathjax_config', $_POST['wp_mathjax_config']);
 	}
 	//Show Admin UI
 	admin_ui();
@@ -92,9 +93,6 @@ function admin_ui()
 			}
 		}
 		?>
-		<tr>
-			<td>Custom:</td><td><input type="radio" name="wp_mathjax_config" value="custom" <?php if(get_option('wp_mathjax_config')=='custom') echo 'checked="checked"'; ?>/></td>
-		</tr>
 	</table>
 	<input type="submit" name="Submit" value="Save Settings" />		
 </form>
