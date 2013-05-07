@@ -74,27 +74,25 @@ function admin_ui()
 		<tr>
 			<td colspan="2"><h3>MathJax Configuration</h3></td>
 		</tr>
-		<tr>
-			<?php
-			$config_dir = plugin_dir_path(__FILE__).'MathJax/config/';
-			echo "<td>$config_dir</td>";
-			$files = scandir($config_dir);
-			
-			foreach($files as $file)
+		<?php
+		$config_dir = plugin_dir_path(__FILE__).'MathJax/config/';
+		$files = scandir($config_dir);
+		foreach($files as $file)
+		{
+			if(is_file($config_dir.$file))
 			{
-				if(is_file($config_dir.$file))
+				$path_parts = pathinfo($config_dir.$file);
+				$config_file = $path_parts['filename'];
+				$checked = '';
+				if(get_option('wp_mathjax_config')==$config_file)
 				{
-					$path_parts = pathinfo($config_dir.$file);
-					$config_file = $path_parts['filename'];
-					$checked = '';
-					if(get_option('wp_mathjax_config')==$config_file)
-					{
-						$checked = 'checked="checked"';
-					}
-					echo "<td>$config_file:</td><td><input type=\"radio\" name=\"wp_mathjax_config\" value=\"$config_file\" $checked/></td>";
+					$checked = 'checked="checked"';
 				}
+				echo "<tr><td>$config_file:</td><td><input type=\"radio\" name=\"wp_mathjax_config\" value=\"$config_file\" $checked/></td></tr>";
 			}
-			?>
+		}
+		?>
+		<tr>
 			<td>Custom:</td><td><input type="radio" name="wp_mathjax_config" value="custom" <?php if(get_option('wp_mathjax_config')=='custom') echo 'checked="checked"'; ?>/></td>
 		</tr>
 	</table>
