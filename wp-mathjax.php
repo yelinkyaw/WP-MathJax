@@ -24,8 +24,15 @@ function mathjax()
 		$mathjax_url = 'http://cdn.mathjax.org/mathjax/latest/MathJax.js';
 	}
 	// Get MathJax Config
-	$config = get_option('wp_mathjax_config');
-	echo "<script type=\"text/javascript\" src=\"$mathjax_url?config=$config\"></script>\n";
+	$config = '?config='.get_option('wp_mathjax_config');
+	echo "<script type=\"text/javascript\" src=\"$mathjax_url$config\"></script>\n";
+	
+	//Get Inline Config
+	$inline = get_option('wp_mathjax_inline');
+	if($inline!='')
+	{
+		echo "<script type=\"text/x-mathjax-config\">\n$inline\n</script>";
+	}
 }
 
 // Add Admin Panel
@@ -43,6 +50,7 @@ function admin_options()
 	{
 		update_option('wp_mathjax_local', $_POST['wp_mathjax_local']);
 		update_option('wp_mathjax_config', $_POST['wp_mathjax_config']);
+		update_option('wp_mathjax_inline', $_POST['wp_mathjax_inline']);
 	}
 	
 	//Initialization
@@ -50,6 +58,7 @@ function admin_options()
 	{
 		update_option('wp_mathjax_local', 1);
 		update_option('wp_mathjax_config', 'TeX-AMS-MML_HTMLorMML');
+		update_option('wp_mathjax_inline', '');
 	}
 	
 	//Show Admin UI
@@ -93,6 +102,9 @@ function admin_ui()
 			}
 		}
 		?>
+		<tr>
+			<td>Inline Config:</td><td><textarea name="wp_mathjax_inline" rows="10" cols="80"><?php echo get_option('wp_mathjax_inline'); ?></textarea></td>
+		</tr>
 	</table>
 	<input type="submit" name="Submit" value="Save Settings" />		
 </form>
